@@ -21,7 +21,7 @@ function MainContainer(props) {
           <div className="d-block d-md-flex w-75 mt-4 justify-content-center align-items-center">
 
 
-            <div className="card w-auto bsCard m-3 border-0 pt-2" style={{fontFamily:"Alegreya Sans SC"}}>
+            <div className="card w-auto bsCard m-3 border-0" style={{fontFamily:"Alegreya Sans SC"}}>
               <div className="card-body p-0">
                 <div class="card-img-top homeCard rounded-0" style={{backgroundImage:"url(/img/main/supportWriters.jpg)",clipPath:"circle(37% at 50% 50%)"}}></div>
                 <div className="card-title w-100 text-center p-3 m-0">
@@ -29,7 +29,7 @@ function MainContainer(props) {
                 </div>
               </div>
             </div>
-           <div className="card w-auto bsCard m-3 border-0 pt-2" style={{fontFamily:"Alegreya Sans SC"}}>
+           <div className="card w-auto bsCard m-3 border-0" style={{fontFamily:"Alegreya Sans SC"}}>
               <div className="card-body p-0">
                 <div class="card-img-top homeCard rounded-0" style={{backgroundImage:"url(/img/main/joyOfReading.jpg)",clipPath:"circle(37% at 50% 50%)"}}></div>
                 <div className="card-title w-100 text-center p-3 m-0">
@@ -37,7 +37,7 @@ function MainContainer(props) {
                 </div>
               </div>
             </div>
-           <div className="card w-auto bsCard m-3 border-0 pt-2" style={{fontFamily:"Alegreya Sans SC"}}>
+           <div className="card w-auto bsCard m-3 border-0" style={{fontFamily:"Alegreya Sans SC"}}>
               <div className="card-body p-0">
                 <div class="card-img-top homeCard rounded-0" style={{backgroundImage:"url(/img/main/allAges.png)",backgroundPosition:"10% center",clipPath:"circle(37% at 50% 50%)"}}></div>
                 <div className="card-title w-100 text-center p-3 m-0">
