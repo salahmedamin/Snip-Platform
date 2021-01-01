@@ -48,7 +48,7 @@ function MainContainer(props) {
           </div>
         </Col>
 
-        <Col className="col-4 d-flex justify-content-around align-items-center mw-100 p-2 " style={{backgroundColor:"rgb(23, 162, 184,.2)"}}>
+        <Col className="col-4 d-flex justify-content-around align-items-center mw-100 p-2" style={{backgroundColor:"rgb(23, 162, 184,.2)"}}>
           <dl className="col-sm-7 d-flex flex-column justify-content-center text-center text-wrap" style={{zIndex:"2"}}>
             <span className="shadow-lg p-3 rounded mb-3 btn btn-outline-dark border-0 enlargeFont">{props.currentLanguage.block2[0]}</span>
             <div className="text-wrap mt-3 h3">{props.currentLanguage.block2[1]}</div>
