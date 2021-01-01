@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link href='https://fonts.googleapis.com/css?family=Gruppo' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Alegreya Sans SC' rel='stylesheet'>
+    <link rel="stylesheet" href="https://drive.google.com/uc?id=1jLrfISsLUcRiwgNl0koSfsS6lylj0E7h">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta charset="UTF-8"/>
+    <meta
+      name="description"
+      content="SNIP! Reading Partner."
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <style>
+	html,body{
+	    height: 100%;
+	    width: 100%
+  }
+  input.form-control{
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 95% center;
+  }
+  input.form-control.loading{
+    background-image: url(/img/loading.gif)
+  }
+  input::-ms-reveal,input::-ms-clear {
+      display: none;
+  }
+  .strengthBar{
+    background-image: linear-gradient(to right,#F7B267,#F79D65,#F4845F,#F27059,#F25C54);
+    overflow:visible
+  }
+  .strengthBar > div.indicator{
+    width: 4px;
+    height: 150%;
+    transition: .5s ease-in;
+  }
+  .loadingDone.deliver{
+    background-color: rgb(55, 146, 146)!important;
+    border-radius: 5px;
+    color: white;
+    text-align: center;
+    background-image: none!important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 17px;
+  }
+  .langHolder{
+    transition: .3s ease all;
+  }
+  .langHolder:hover{
+    background-color: rgb(0,0,0,.6);
+  }
+  .bsCard{
+    transition: .5s ease all;
+    cursor: pointer;
+    border: 1px solid transparent !important;
+    min-width: 33.3% !important;
+    font-family: "Gruppo";
+    font-weight: bold;
+    font-size: 18px;
+    padding-bottom: 0;
+  }
+  .card-title{
+    transition: .3s ease all;
+    margin-bottom: 0 !important;
+  }
+  .bsCard .card-title:hover{
+    background-color: black!important;
+    color: white !important;
+  }
+  .homeCard{
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 200px;
+    width: 100%
+  }
+    </style>
+    <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <title>Snip</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root" style="height:100%"></div>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+  </body>
+</html>

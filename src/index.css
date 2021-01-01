@@ -1,0 +1,91 @@
+html{
+  scroll-behavior: smooth;
+  transition: scroll 1s;
+}
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+.enlargeFont{
+  font-weight: bold!important;
+  font-size: 20px!important;
+}
+@keyframes float {
+	0% {
+		box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
+		transform: none
+	}
+	50% {
+		box-shadow: 0 20px 15px 0px rgba(0,0,0,0.2);
+		transform: scale(1.1)
+	}
+	100% {
+		box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
+		transform: none
+	}
+}
+a.text-light:hover{
+  text-decoration: none;
+  color: white;
+}
+.custom-control.custom-switch{
+  padding: 0;
+  margin: 0;
+  position: relative;
+}
+.btn,a.btn{
+  transition: .3s ease all !important;
+}
+.btn.closeForm:hover{
+  transform: rotate(90deg);
+}
+input:focus{
+  box-shadow: none!important
+}
+input.loading{
+  background-position: 98% center;
+  background-repeat: no-repeat;
+  background-size: contain!important;
+}
+.collapse{
+  transition: height .6s ease all;
+}
+.mobileDisp a,.mobileDisp div{
+  width: 70%;
+  margin-left: 15%;
+  border: 1px solid white;
+  border-radius: 5px;
+  margin-bottom: 16px;
+}
+.mobileDisp a:hover,.mobileDisp div:hover{
+  background-color: rgba(0, 0, 0, 0.493);
+  border: 1px solid transparent;
+}
+.collapse:not(.show) {
+  display: block !important;
+  height: 0px;
+  overflow: hidden;
+  visibility: visible!important;
+}
+.collapse.show{
+  height: auto;
+}
+.langs-div{
+  transition:0.7s ease all;
+  height: 0px;
+  opacity: 0;
+  overflow: hidden;
+  font-weight: bold;
+  color: black;
+  z-index: 99999999999999999999;
+  background-color: white;
+}
+.langs-div.show{
+  height: auto;
+  opacity: 1;
+}
