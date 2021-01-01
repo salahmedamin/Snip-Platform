@@ -10,7 +10,7 @@ function MainContainer(props) {
       <Row className="d-block h-100 w-100 px-0">
 
 
-        <Col style={{backgroundImage:"url(/img/main/readsunset.jpg)",backgroundAttachment:"fixed",backgroundSize:"cover",backgroundRepeat:"no-repeat",backgroundPosition:"center center",paddingBottom:"200px",paddingTop:"200px"}} className="m-0 h-100 mh-100 d-flex flex-column justify-content-center align-items-center w-100 font-weight-bold">
+        <Col style={{backgroundImage:"url(/img/main/readsunset.jpg)",backgroundAttachment:"fixed",backgroundSize:"cover",backgroundRepeat:"no-repeat",backgroundPosition:"center center",paddingBottom:"150px",paddingTop:"200px"}} className="m-0 h-100 mh-100 d-flex flex-column justify-content-center align-items-center w-100 font-weight-bold">
           <div className="h3 text-white p-2" style={{backdropFilter:"blur(15px)"}}>
             {props.currentLanguage.block1[0]}
           </div>
@@ -21,26 +21,26 @@ function MainContainer(props) {
           <div className="d-block d-md-flex w-75 mt-4 justify-content-center align-items-center">
 
 
-            <div className="card w-auto text-light bsCard m-3 border-0" style={{fontFamily:"Alegreya Sans SC"}}>
+            <div className="card w-auto bsCard m-3 border-0 pt-2" style={{fontFamily:"Alegreya Sans SC"}}>
               <div className="card-body p-0">
-                <div class="card-img-top homeCard rounded-0" style={{backgroundImage:"url(/img/main/supportWriters.jpg)"}}></div>
-                <div className="card-title w-100 bg-light text-primary text-center p-3 m-0">
+                <div class="card-img-top homeCard rounded-0" style={{backgroundImage:"url(/img/main/supportWriters.jpg)",clipPath:"circle(37% at 50% 50%)"}}></div>
+                <div className="card-title w-100 text-center p-3 m-0">
                   {props.currentLanguage.block1[2][0]}
                 </div>
               </div>
             </div>
-           <div className="card w-auto text-light bsCard m-3 border-0" style={{fontFamily:"Alegreya Sans SC"}}>
+           <div className="card w-auto bsCard m-3 border-0 pt-2" style={{fontFamily:"Alegreya Sans SC"}}>
               <div className="card-body p-0">
-                <div class="card-img-top homeCard rounded-0" style={{backgroundImage:"url(/img/main/joyOfReading.jpg)"}}></div>
-                <div className="card-title w-100 bg-light text-primary text-center p-3 m-0">
+                <div class="card-img-top homeCard rounded-0" style={{backgroundImage:"url(/img/main/joyOfReading.jpg)",clipPath:"circle(37% at 50% 50%)"}}></div>
+                <div className="card-title w-100 text-center p-3 m-0">
                 {props.currentLanguage.block1[2][1]}
                 </div>
               </div>
             </div>
-           <div className="card w-auto text-light bsCard m-3 border-0" style={{fontFamily:"Alegreya Sans SC"}}>
+           <div className="card w-auto bsCard m-3 border-0 pt-2" style={{fontFamily:"Alegreya Sans SC"}}>
               <div className="card-body p-0">
-                <div class="card-img-top homeCard rounded-0" style={{backgroundImage:"url(/img/main/allAges.png)"}}></div>
-                <div className="card-title w-100 bg-light text-primary text-center p-3 m-0">
+                <div class="card-img-top homeCard rounded-0" style={{backgroundImage:"url(/img/main/allAges.png)",backgroundPosition:"10% center",clipPath:"circle(37% at 50% 50%)"}}></div>
+                <div className="card-title w-100 text-center p-3 m-0">
                 {props.currentLanguage.block1[2][2]}
                 </div>
               </div>
@@ -48,7 +48,7 @@ function MainContainer(props) {
           </div>
         </Col>
 
-        <Col className="col-4 d-flex justify-content-around align-items-center mw-100 p-2" style={{backgroundColor:"rgb(23, 162, 184,.2)"}}>
+        <Col className="col-4 d-flex justify-content-around align-items-center mw-100 p-2" style={{backgroundImage:"linear-gradient(to bottom,rgb(23, 162, 184,.2) 0%,#A4A8D1 105%)"}}>
           <dl className="col-sm-7 d-flex flex-column justify-content-center text-center text-wrap" style={{zIndex:"2"}}>
             <span className="shadow-lg p-3 rounded mb-3 btn btn-outline-dark border-0 enlargeFont">{props.currentLanguage.block2[0]}</span>
             <div className="text-wrap mt-3 h3">{props.currentLanguage.block2[1]}</div>
@@ -74,24 +74,22 @@ function MainContainer(props) {
           <Image className="col-sm-5 d-none d-md-block" src="/Loomis/convo.svg"/>
         </Col>
 
-
-
-        <Col className="col-4 d-xs-block d-sm-flex flex-row-reverse justify-content-around align-items-center mw-100 p-5" style={{backgroundColor:"#A4A8D1"}}>
+        <Col className="col-4 d-xs-block d-sm-flex flex-row-reverse justify-content-around align-items-center mw-100 p-5" style={{backgroundImage:"linear-gradient(to bottom,rgb(164, 168, 209,.98) 0%,white 190%)"}}>
           
         <dl className="col-sm-7 d-flex flex-column justify-content-center text-center" style={{zIndex:"2"}}>
-            <span className="shadow-lg p-3 rounded mb-3 btn btn-outline-light border-0 enlargeFont text-wrap">{props.currentLanguage.block3[0]}</span>
-            <div className="text-wrap mt-3 text-light h4 text-wrap">{props.currentLanguage.block3[1]}</div>
+            <span className="shadow-lg p-3 rounded mb-3 btn btn-outline-light border-0 enlargeFont text-wrap text-dark">{props.currentLanguage.block3[0]}</span>
+            <div className="text-wrap mt-3 text-dark h4">{props.currentLanguage.block3[1]}</div>
             <Row className="d-flex flex-wrap justify-content-center align-items-center mt-4">
               <Col className="d-flex flex-column justify-content-center align-items-center p-4">
-                <div className="h5 mb-2 text-light">{props.currentLanguage.block3[2][0]}</div>
+                <div className="h5 mb-2 text-dark">{props.currentLanguage.block3[2][0]}</div>
                 <div style={{height:"100px",width:"100px",backgroundImage:"url(/img/main/switchModes.png)",backgroundRepeat:"no-repeat",backgroundPosition:"center center",backgroundSize:"contain"}} className="rounded-circle"/>
               </Col>
               <Col className="d-flex flex-column justify-content-center align-items-center p-4">
-                <div className="h5 mb-2 text-light">{props.currentLanguage.block3[2][1]}</div>
+                <div className="h5 mb-2 text-dark">{props.currentLanguage.block3[2][1]}</div>
                 <Image style={{maxHeight:"100px",maxWidth:"100px"}} src="/img/main/colorPalette.svg"/>
               </Col>
               <Col className="d-flex flex-column justify-content-center align-items-center p-4">
-                <div className="h5 mb-2 text-light">{props.currentLanguage.block3[2][2]}</div>
+                <div className="h5 mb-2 text-dark">{props.currentLanguage.block3[2][2]}</div>
                 <Image style={{maxHeight:"100px",maxWidth:"100px"}} src="/img/main/profileCustom.svg"/>
               </Col>
             </Row>
@@ -105,7 +103,7 @@ function MainContainer(props) {
 
 
 
-        <Col className="col-4 d-xs-block d-sm-flex flex-row justify-content-around align-items-center mw-100 p-5 border-bottom">
+        <Col className="col-4 d-xs-block d-sm-flex flex-row justify-content-around align-items-center mw-100 p-5 border-bottom" style={{backgroundImage:"linear-gradient(to bottom,rgb(164, 168, 209,.5) 0%, white 30%,lightgrey 99%)"}}>
           
         <dl className="col-sm-7 d-flex flex-column justify-content-center text-center" style={{zIndex:"2"}}>
             <span className="shadow-lg p-3 rounded mb-3 btn btn-outline-dark border-0 enlargeFont text-wrap">{props.currentLanguage.block4[0]}</span>
@@ -117,7 +115,7 @@ function MainContainer(props) {
             <Row className="d-flex flex-wrap justify-content-center align-items-center mt-4">
               <Col className="d-flex flex-column justify-content-center align-items-center p-4">
                 <div className="h5 mb-2">{props.currentLanguage.block4[2][0]}</div>
-                <div style={{height:"100px",width:"100px",backgroundImage:"url(/img/main/gradingStars.png)",backgroundRepeat:"no-repeat",backgroundPosition:"center center",backgroundSize:"100% 25%"}} className="rounded-circle"/>
+                <div style={{height:"100px",width:"100px",backgroundImage:"url(/img/main/gradingStars.png)",backgroundRepeat:"no-repeat",backgroundPosition:"center center",backgroundSize:"100% 21%"}} className="rounded-circle"/>
               </Col>
               <Col className="d-flex flex-column justify-content-center align-items-center p-4">
                 <div className="h5 mb-2">{props.currentLanguage.block4[2][1]}</div>
