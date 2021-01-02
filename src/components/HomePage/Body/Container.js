@@ -2,6 +2,7 @@ import {Container,Row,Col,Image} from 'react-bootstrap'
 import { Link } from "react-router-dom";
 import Or from '../OrStyle'
 import {connect} from "react-redux"
+import Footer from "../Footer/Footer"
 
 function MainContainer(props) {
   return (
@@ -140,6 +141,7 @@ function MainContainer(props) {
         </Col>
       </Row>
     </Container>
+    <Footer />
     </>
   );
 }
