@@ -38,7 +38,7 @@ function Signin(props) {
     e.preventDefault()
     seterrorMessage('')
     try{
-      if(grecaptcha.getResponse().length == 0){
+      if(grecaptcha.getResponse().length === 0){
         throw new Error("Please fill in the recaptcha")
       }
       if(emailValid && goodPW && !disabled){
@@ -85,7 +85,7 @@ function Signin(props) {
   return (
     <>
     <Form onSubmit={(e)=>formCek(e)} style={{paddingTop: "4%"}}>
-      <div className={"col-12 btn btn-outline-danger mb-3"+(errorMessage.length==0?" d-none":'')}>{errorMessage}</div>
+      <div className={"col-12 btn btn-outline-danger mb-3"+(errorMessage.length===0?" d-none":'')}>{errorMessage}</div>
       <Form.Row className="mb-2">
         <Col>
           <Form.Control placeholder={email} className={emailValid?" border-success" : emailValid === undefined ? "" : "border-danger"} id="email" onBlur={(e)=>isEmail(e)} autoComplete="nope" type="email"/>

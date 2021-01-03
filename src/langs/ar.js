@@ -1,4 +1,4 @@
-export default {
+const ar = {
     error:{
         notfound:"هذه الصفحة غير موجودة"
     },
@@ -37,3 +37,4 @@ export default {
 
     }
 }
+export default ar

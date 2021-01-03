@@ -1,4 +1,4 @@
-export default {
+const en = {
     error:{
         notfound:"Uh-oh! Looks like someone's lost"
     },
@@ -38,3 +38,4 @@ export default {
 
     }
 }
+export default en

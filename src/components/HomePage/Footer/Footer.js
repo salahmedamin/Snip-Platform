@@ -1,5 +1,5 @@
 import Logo from "../../SVG/Logo"
-export default ()=>{
+const Footer = ()=>{
     return (
     <div className="w-100 d-flex" style={{height:"80px"}}>
         <div className="bg-dark position-relative d-flex justify-content-start align-items-center" style={{clipPath:"polygon(0 0,80px 0, 30px 80px,0 80px)",width:"80px",height:"80px"}}>
@@ -15,3 +15,4 @@ export default ()=>{
         </div>
     </div>)
 }
+export default Footer

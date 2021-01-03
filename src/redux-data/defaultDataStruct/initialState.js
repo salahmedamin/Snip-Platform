@@ -1,7 +1,7 @@
 import objects from "./strcuts";
 import en from "../../langs/en"
 
-export default {
+const initial = {
     showLangsBar:false,
     currentLanguage:{
         name:"en",
@@ -17,3 +17,4 @@ export default {
         messagesList:[objects.Messaging.MessageItem]
     }
 }
+export default initial

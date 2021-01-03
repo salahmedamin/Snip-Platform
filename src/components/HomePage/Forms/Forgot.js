@@ -14,7 +14,7 @@ function Forgot(props) {
   const formCek = (e)=>{
     e.preventDefault()
     if(detail.length > 2){
-      if(grecaptcha.getResponse().length == 0){
+      if(grecaptcha.getResponse().length === 0){
         throw new Error("Please fill in the recaptcha")
       }
       props.launchLoading(true)
@@ -36,7 +36,7 @@ function Forgot(props) {
       <Form.Row className="mb-2">
         <Col>
           <Form.Control placeholder="Enter username or email address" value={detail} onChange={(e)=>setdetail(e.target.value)} autoComplete="nope"/>
-          <div className={(detail.length>2 || detail.length == 0?"d-none" : "d-block")+" btn-danger rounded-bottom px-1"}>Please enter a valid input</div>
+          <div className={(detail.length>2 || detail.length === 0?"d-none" : "d-block")+" btn-danger rounded-bottom px-1"}>Please enter a valid input</div>
         </Col>
       </Form.Row>
       <ReCAPTCHA ref={recap} grecaptcha={grecaptcha} sitekey="6LdHEv0UAAAAAM3715icjBeTbJG8AnZVqQVkfbnu" onChange={()=>setDisabled(false)} onExpired={()=>setDisabled(true)} onErrored={()=>setDisabled(true)}></ReCAPTCHA>

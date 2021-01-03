@@ -1,4 +1,4 @@
-export default {
+const fr = {
     error:{
         notfound:"La page demandée est introuvable"
     },
@@ -37,3 +37,5 @@ export default {
 
     }
 }
+
+export default fr
