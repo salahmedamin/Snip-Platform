@@ -1,6 +1,7 @@
 import store from "../../../redux-data/store"
 import Globe from "../../SVG/globe"
-export default (props)=>{
+ 
+const Lang = (props)=>{
     
     return(<div onClick={()=>store.dispatch({type:"SWITCH_LANG_BAR"})} className="position-fixed d-flex rounded-bottom p-2 justify-content-center align-items-center" style={{boxShadow:"0px 3px 4px .2px black",cursor:"pointer",width:"auto",minWidth:"100px",zIndex:4000000,height:"35px",top:"92%",right:"15px",backgroundColor:"royalblue"}}>
       
@@ -20,3 +21,4 @@ export default (props)=>{
       <span style={{marginLeft:"5px",color:"white"}}>{props.currentLanguage.values.navbar.lang}</span>
     </div>)
 }
+export default Lang

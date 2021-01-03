@@ -1,5 +1,4 @@
 import {useState,useEffect} from 'react'
-import {useLocation} from 'react-router-dom'
 const WidthOnScroll = ()=>{
     const [width, setwidth] = useState("0%")
     const getVerticalScrollPercentage = ( elm )=>{
