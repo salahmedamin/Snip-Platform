@@ -44,6 +44,7 @@ function Naver(props) {
         document.querySelector(".navbar-toggler").click()
       })
     )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (
     <>

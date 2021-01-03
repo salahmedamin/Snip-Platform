@@ -109,6 +109,7 @@ function Signup(props) {
   }
   useEffect(() => {
     document.querySelector(`.indicator`).style.marginLeft = ((25-0.5)*pwdStrgth)+"%"
+    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pwd])
   return (
     <>
@@ -132,7 +133,7 @@ function Signup(props) {
           </Form.Row>
           <Form.Row className="mb-2">
             <Col>
-              <Form.Control name="username" placeholder={props.curr.username} required className={usernameValid === "empty" ? "" :  usernameValid && usernameValid!=="loading" ? "border-success" : usernameValid == "loading" ? "loading" : usernameValid === undefined ? "" : "border-danger rounded-0"} id="username" onBlur={(e)=>checkUsername(e)} autoComplete="neww"/>
+              <Form.Control name="username" placeholder={props.curr.username} required className={usernameValid === "empty" ? "" :  usernameValid && usernameValid!=="loading" ? "border-success" : usernameValid === "loading" ? "loading" : usernameValid === undefined ? "" : "border-danger rounded-0"} id="username" onBlur={(e)=>checkUsername(e)} autoComplete="neww"/>
               <div className={(usernameValid || usernameValid === undefined ?"d-none":"d-block")+" btn-danger rounded-bottom px-1"}>{props.curr.usernameError}</div>
             </Col>
           </Form.Row>
@@ -152,7 +153,7 @@ function Signup(props) {
           </Form.Row>
           <Form.Row className="mb-2">
             <Col>
-              <Form.Control type="password" required placeholder={props.curr.confP} className={eqPs && pwd.length > 0?"border-success":eqPs===undefined || pwd.length == 0?"":"border-danger"} onBlur={(e)=>equalsPasses(e)}/>
+              <Form.Control type="password" required placeholder={props.curr.confP} className={eqPs && pwd.length > 0?"border-success":eqPs===undefined || pwd.length === 0?"":"border-danger"} onBlur={(e)=>equalsPasses(e)}/>
             </Col>
           </Form.Row>
 
