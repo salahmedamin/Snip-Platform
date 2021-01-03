@@ -45,7 +45,7 @@ function Signup(props) {
     !xhttp.data ? setUsernameValid(true) : setUsernameValid(false)
   }
   const isName = (e,n)=>{
-    n=="f" ?
+    n==="f" ?
     setFnameValid(validator.matches(e.target.value,/^[a-zA-Z ]+$/))
     :
     setLnameValid(validator.matches(e.target.value,/^[a-zA-Z ]+$/))
@@ -68,7 +68,7 @@ function Signup(props) {
     let holder = {}
     form.querySelectorAll("input").forEach((v,i)=>{
       let name = v.name
-      if(name.length == 0) return;
+      if(name.length === 0) return;
       holder[name] = v.value
     })
     return holder
@@ -76,7 +76,7 @@ function Signup(props) {
   const formCek = async(e)=>{
     e.preventDefault()
     try{
-      if(grecaptcha.getResponse().length == 0){
+      if(grecaptcha.getResponse().length === 0){
         throw new Error("Please fill in the recaptcha")
       }
       if(fNameValid && lNameValid && emailValid && pwd.length > 0 && pwdStrgth >=2 && eqPs && !disabled){
@@ -113,27 +113,27 @@ function Signup(props) {
   return (
     <>
         <Form onSubmit={(e)=>formCek(e)}>
-          <div className={"col-12 btn btn-outline-danger mb-3"+(errorMessage.length==0?" d-none":'')}>{errorMessage}</div>
+          <div className={"col-12 btn btn-outline-danger mb-3"+(errorMessage.length===0?" d-none":'')}>{errorMessage}</div>
           <Form.Row className="mb-2 d-flex">
             <Col className="d-block col-6">
-              <Form.Control placeholder={props.curr.fName} name="fName" required className={(fNameValid?"border-success" : fNameValid == undefined ? "" : "border-danger rounded-0")} id="fName" onBlur={(e)=>isName(e,"f")} autoComplete="nope"/>
-              <div className={(fNameValid || fNameValid == undefined?"d-none":"d-block")+" btn-danger rounded-bottom px-1"}>{props.curr.formatError}</div>
+              <Form.Control placeholder={props.curr.fName} name="fName" required className={(fNameValid?"border-success" : fNameValid === undefined ? "" : "border-danger rounded-0")} id="fName" onBlur={(e)=>isName(e,"f")} autoComplete="nope"/>
+              <div className={(fNameValid || fNameValid === undefined?"d-none":"d-block")+" btn-danger rounded-bottom px-1"}>{props.curr.formatError}</div>
             </Col>
             <Col className="d-block col-6">
-              <Form.Control placeholder={props.curr.lName} name="lName" required className={(lNameValid?"border-success" : lNameValid == undefined ? "" : "border-danger rounded-0")} id="lName" onBlur={(e)=>isName(e,"l")} autoComplete="nope"/>
-              <div className={(lNameValid || lNameValid == undefined?"d-none":"d-block")+" btn-danger rounded-bottom px-1"}>{props.curr.formatError}</div>
+              <Form.Control placeholder={props.curr.lName} name="lName" required className={(lNameValid?"border-success" : lNameValid === undefined ? "" : "border-danger rounded-0")} id="lName" onBlur={(e)=>isName(e,"l")} autoComplete="nope"/>
+              <div className={(lNameValid || lNameValid === undefined?"d-none":"d-block")+" btn-danger rounded-bottom px-1"}>{props.curr.formatError}</div>
             </Col>
           </Form.Row>
           <Form.Row className="mb-2">
             <Col>
-              <Form.Control placeholder={props.curr.email} name="email" required onBlur={(e)=>isEmail(e)} className={emailValid?" border-success" : emailValid == undefined ? "" : "border-danger rounded-0"} autoComplete="neww"/>  
-              <div className={(emailValid || emailValid == undefined?"d-none":"d-block")+" btn-danger rounded-bottom px-1"}>{props.curr.emailError}</div>
+              <Form.Control placeholder={props.curr.email} name="email" required onBlur={(e)=>isEmail(e)} className={emailValid?" border-success" : emailValid === undefined ? "" : "border-danger rounded-0"} autoComplete="neww"/>  
+              <div className={(emailValid || emailValid === undefined?"d-none":"d-block")+" btn-danger rounded-bottom px-1"}>{props.curr.emailError}</div>
             </Col> 
           </Form.Row>
           <Form.Row className="mb-2">
             <Col>
-              <Form.Control name="username" placeholder={props.curr.username} required className={usernameValid == "empty" ? "" :  usernameValid && usernameValid!=="loading" ? "border-success" : usernameValid == "loading" ? "loading" : usernameValid == undefined ? "" : "border-danger rounded-0"} id="username" onBlur={(e)=>checkUsername(e)} autoComplete="neww"/>
-              <div className={(usernameValid || usernameValid == undefined ?"d-none":"d-block")+" btn-danger rounded-bottom px-1"}>{props.curr.usernameError}</div>
+              <Form.Control name="username" placeholder={props.curr.username} required className={usernameValid === "empty" ? "" :  usernameValid && usernameValid!=="loading" ? "border-success" : usernameValid == "loading" ? "loading" : usernameValid === undefined ? "" : "border-danger rounded-0"} id="username" onBlur={(e)=>checkUsername(e)} autoComplete="neww"/>
+              <div className={(usernameValid || usernameValid === undefined ?"d-none":"d-block")+" btn-danger rounded-bottom px-1"}>{props.curr.usernameError}</div>
             </Col>
           </Form.Row>
           <Form.Row className="mt-2 mb-2 border-bottom"/>
@@ -152,7 +152,7 @@ function Signup(props) {
           </Form.Row>
           <Form.Row className="mb-2">
             <Col>
-              <Form.Control type="password" required placeholder={props.curr.confP} className={eqPs && pwd.length > 0?"border-success":eqPs==undefined || pwd.length == 0?"":"border-danger"} onBlur={(e)=>equalsPasses(e)}/>
+              <Form.Control type="password" required placeholder={props.curr.confP} className={eqPs && pwd.length > 0?"border-success":eqPs===undefined || pwd.length == 0?"":"border-danger"} onBlur={(e)=>equalsPasses(e)}/>
             </Col>
           </Form.Row>
 

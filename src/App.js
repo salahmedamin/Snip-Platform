@@ -23,7 +23,7 @@ function App(props) {
   if(!hl){
     store.dispatch({type:"CHANGE_LANG",payload:{name:"en"}})
   }
-  else if(hl && possible.includes(hl) && window.cnt == 0){
+  else if(hl && possible.includes(hl) && window.cnt === 0){
     window.cnt++
     store.dispatch({type:"CHANGE_LANG",payload:{name:hl}})
   }
