@@ -2,10 +2,13 @@ import store from "../../../redux-data/store"
 import Globe from "../../SVG/globe"
  
 const Lang = (props)=>{
-    
-    return(<div onClick={()=>store.dispatch({type:"SWITCH_LANG_BAR"})} className="position-fixed d-flex rounded-bottom p-2 justify-content-center align-items-center" style={{boxShadow:"0px 3px 4px .2px black",cursor:"pointer",width:"auto",minWidth:"100px",zIndex:4000000,height:"35px",top:"92%",right:"15px",backgroundColor:"royalblue"}}>
+    const listener = ()=>{
+      const list = document.querySelector(".langs-div.position-absolute.w-100.rounded-top").classList
+      !list.contains("show") ? list.add("show") : list.remove("show")
+    }
+    return(<div className="position-fixed d-flex rounded-bottom p-2 justify-content-center align-items-center" style={{boxShadow:"0px 3px 4px .2px black",cursor:"pointer",width:"auto",minWidth:"100px",zIndex:4000000,height:"35px",top:"92%",right:"15px",backgroundColor:"royalblue"}} onClick={listener}>
       
-      <div style={{bottom:"100%",right:"0"}} className={"langs-div position-absolute w-100 rounded-top"+(props.showLangsBar ? " show" : "")}>
+      <div style={{bottom:"100%",right:"0"}} className={"langs-div position-absolute w-100 rounded-top"}>
         <div className={"lang d-flex flex-column justify-content-center align-items-center"}>
           {
             props.LanguagesArray.map((v,i)=>(

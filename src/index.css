@@ -89,3 +89,12 @@ input.loading{
   height: auto;
   opacity: 1;
 }
+a.hasNew span{
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: firebrick
+}

@@ -3,8 +3,21 @@ import { Link } from "react-router-dom";
 import Or from '../OrStyle'
 import {connect} from "react-redux"
 import Footer from "../Footer/Footer"
+import Axios from 'axios'
+import {useEffect} from 'react'
+import {getCookie,setCookie} from "../../../redux-data/cookieStuff"
 
 function MainContainer(props) {
+  // useEffect(() => {
+  //   const access = getCookie("Access-Token")
+  //   if(access && access.length > 0){
+  //     Axios.post("http://localhost:2500/tokenVerif",{token:getCookie("Access-Token")})
+  //     .then(v=>{
+  //       if(v.data.good) window.location.href = '/home'
+  //       else setCookie("Access-Token","",3000)
+  //     })
+  //   }
+  // }, [])
   return (
     <>
     <Container fluid className="w-100 h-auto p-0 d-flex justify-content-center position-relative" style={{fontFamily:"Alegreya Sans SC"}}>
@@ -52,7 +65,7 @@ function MainContainer(props) {
         <Col className="col-4 d-flex justify-content-around align-items-center mw-100 p-2" style={{backgroundImage:"linear-gradient(to bottom,rgb(23, 162, 184,.2) 0%,#A4A8D1 105%)"}}>
           <dl className="col-sm-7 d-flex flex-column justify-content-center text-center text-wrap" style={{zIndex:"2"}}>
             <span className="shadow-lg p-3 rounded mb-3 btn btn-outline-dark border-0 enlargeFont">{props.currentLanguage.block2[0]}</span>
-            <div className="text-wrap mt-3 h3">{props.currentLanguage.block2[1]}</div>
+            <div className="text-wrap mt-3 display-4" style={{color:"royalblue"}}>{props.currentLanguage.block2[1]}</div>
             <Row className="d-flex flex-wrap justify-content-center align-items-center mt-4">
               <Col className="d-flex flex-column justify-content-center align-items-center p-4">
                 <div className="h5 mb-2">{props.currentLanguage.block2[2][0]}</div>
@@ -79,7 +92,7 @@ function MainContainer(props) {
           
         <dl className="col-sm-7 d-flex flex-column justify-content-center text-center" style={{zIndex:"2"}}>
             <span className="shadow-lg p-3 rounded mb-3 btn btn-outline-light border-0 enlargeFont text-wrap text-dark">{props.currentLanguage.block3[0]}</span>
-            <div className="text-wrap mt-3 text-dark h4">{props.currentLanguage.block3[1]}</div>
+            <div className="text-wrap mt-3 display-4" style={{color:"royalblue"}}>{props.currentLanguage.block3[1]}</div>
             <Row className="d-flex flex-wrap justify-content-center align-items-center mt-4">
               <Col className="d-flex flex-column justify-content-center align-items-center p-4">
                 <div className="h5 mb-2 text-dark">{props.currentLanguage.block3[2][0]}</div>
@@ -133,11 +146,11 @@ function MainContainer(props) {
 
 
 
-        <Col className="col-4 position-relative d-flex flex-column justify-content-center align-items-center mw-100 p-5 border-0 overflow-hidden" style={{backgroundImage:"url(/img/main/joinBG.jpg)",backgroundAttachment:"fixed",backgroundRepeat:"no-repeat",backgroundSize:"cover",backgroundPosition:"center center"}}>
+        <Col className="col-4 position-relative d-flex flex-column justify-content-center align-items-center mw-100 p-5 border-0 overflow-hidden" style={{backgroundImage:"url(/img/main/joinBG.svg)",backgroundRepeat:"no-repeat",backgroundSize:"cover",backgroundPosition:"center center"}}>
           <Image className="position-absolute" style={{top:0,right:"-20%",width:"65%",height:"150%"}} src="/img/main/stillHere.svg"></Image>
-          <Link to="/signup" className="btn btn-outline-light mt-4 p-3 text-center rounded col-10 col-md-4" style={{boxShadow:"0px 0px 25px 0px black"}}>{props.currentLanguage.block5[0]}</Link>
+          <Link to="/signup" className="btn btn-outline-light mt-4 p-3 text-center rounded col-10 col-md-4">{props.currentLanguage.block5[0]}</Link>
           <Or text="light" border="light" width="25" or={props.currentLanguage.block5[1]}/>
-          <Link to="/signin" className="btn btn-outline-primary p-3 text-center rounded col-10 col-md-4" style={{boxShadow:"0px 0px 25px 0px black"}}>{props.currentLanguage.block5[2]}</Link>
+          <Link to="/signin" className="btn btn-light p-3 text-center rounded col-10 col-md-4">{props.currentLanguage.block5[2]}</Link>
         </Col>
       </Row>
     </Container>
@@ -146,6 +159,6 @@ function MainContainer(props) {
   );
 }
 
-const mapStateToProps = state=>({currentLanguage:state.currentLanguage.values.container})
+const mapStateToProps = state=>({currentLanguage:state.currentLanguage.values.container,isLoggedIn:state.AuthenticationStatus.isLoggedIn})
 
 export default connect(mapStateToProps)(MainContainer);

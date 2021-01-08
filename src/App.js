@@ -28,6 +28,12 @@ function App(props) {
     store.dispatch({type:"CHANGE_LANG",payload:{name:hl}})
   }
 
+  const logOut = ()=>{
+    setCookie("Access-Token","",3000)
+    store.dispatch({type:"SET_LOGGED_OUT"})
+    window.location.href = "/"
+  }
+
 
   //checking if already authenticated
   if(!props.GLOBAL_CURRENT_STATS.isLoggedIn){
@@ -52,9 +58,7 @@ function App(props) {
       <NavBar />
 
       <Switch>
-          <Route exact path="/">
-            <MainContainer/>
-          </Route>
+          <Route exact path="/" component={MainContainer}/>
           <Route path="/signin">
             <MainContainer />
             <Form form="signin"></Form>
@@ -67,6 +71,9 @@ function App(props) {
             <MainContainer />
             <Form form="forgot"></Form>
           </Route>
+          {/* <Route exact path="/messages" component={Messaging}/> */}
+          {/* <Route path="/messages/:user" component={Messaging}/> */}
+          <Route path="/logout" render={logOut}/>
           <Route>
             <NotFound/>
           </Route>

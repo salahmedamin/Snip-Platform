@@ -1,8 +1,8 @@
 import objects from "./defaultDataStruct/strcuts";
-import initialState from "./defaultDataStruct/initialState";
+// import initialState from "./defaultDataStruct/initialState";
 import {/*getCookie,*/setCookie} from "./cookieStuff"
  
-const Reducer = (state=initialState,action)=>{
+const Reducer = (state/*=initialState*/,action)=>{
     switch(action.type){
         case "SET_LOGGED_IN":
             return {...state,AuthenticationStatus:{isLoggedIn:true,JWT_TOKEN:action.payload.JWT_TOKEN}}

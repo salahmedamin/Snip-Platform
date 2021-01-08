@@ -70,6 +70,7 @@ function Signin(props) {
           store.dispatch({type:"SET_LOGGED_IN",payload:{JWT_TOKEN:response.headers['access-token']}})
           store.dispatch({type:"SET_USER_DETAILS",payload:{records:response.data.userRecords}})
           props.launchLoading(false)
+          window.location.href = "/home"
           throw new Error('')
         }
       }

@@ -6,7 +6,7 @@ const Footer = ()=>{
             <Logo />
         </div>
         <div className="h-100 d-flex flex-column justify-content-center align-items-center" style={{width:"calc( 100% - 80px )",fontFamily:"Alegreya Sans SC"}}>
-            <div><strong>THIS WEBSITE HAS BEEN DESIGNED BY AMIN SALAH</strong></div>
+            <div><strong>MADE WITH ❤ BY AMIN SALAH</strong></div>
             <div className="d-flex justify-content-center">
                 <a href="https://github.com/salahmedamin" style={{marginRight:"5px"}}><img src="https://cdn.onlinewebfonts.com/svg/img_326384.png" alt="" width="30" height="30"/></a>
                 <a href="https://www.linkedin.com/in/aminsalah/" style={{marginRight:"5px"}}><img src="https://icon-library.com/images/linkedin-icon-no-background/linkedin-icon-no-background-8.jpg" alt="" width="30" height="30"/></a>

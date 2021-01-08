@@ -4,39 +4,42 @@ import Logo from '../../SVG/Logo'
 import WidthOnScroll from './WidthOnScroll'
 import SmallLang from "./langSmall"
 import { connect } from "react-redux"
-import { useEffect } from "react"
+import { useEffect,useState } from "react"
+import AfterAuthNav from "./afterAuth"
 
 function Naver(props) {
+  const [showNavOptions, setShowNavOptions] = useState(false) 
   const whenLoggedIn = { 
     Home: {
       link:"/home",
-      icon:""
+      icon:"home.svg"
     }, 
-    Me: {
+    "My Profile": {
       link:"/me",
-      icon:""
+      icon:"myProfile.svg"
     }, 
     Settings: {
       link:"/settings",
-      icon:""
+      icon:"settings.svg"
     }, 
     Messages: {
       link:"/messages",
-      icon:""
+      icon:"messages.svg"
     }, 
     Notifications: {
       link:"/notifications",
-      icon:""
+      icon:"notification.svg"
     },
     "Saved Posts":{
       link:"/saved",
-      icon:""
+      icon:"saved.svg"
     },
     Logout:{
       link:"/logout",
-      icon:""
+      icon:"logout.svg"
     }
   }
+
   const links = []
   useEffect(() => {
     links.map(v =>
@@ -49,7 +52,7 @@ function Naver(props) {
   return (
     <>
       <Navbar expand="sm" collapseOnSelect fixed="top" className="p-0 pr-0 pr-md-3 d-flex" style={{ backdropFilter: "blur(5px)", backgroundColor: "rgb(0,0,0,.4)" }}>
-        <Navbar.Brand className="px-2 pb-2 h-100" href="/"><Logo /></Navbar.Brand>
+        <Navbar.Brand className="px-2 pb-2 h-100"><Link to="/"><Logo /></Link></Navbar.Brand>
         <Nav className="flex-row justify-content-center d-none d-sm-flex align-items-center text-center position-absolute py-3" style={{ right: "30px" }}>
           {
             !props.Details.isLoggedIn ?
@@ -58,23 +61,25 @@ function Naver(props) {
                 <Link to="/signup" className="btn btn-light text-primary rounded-0 px-3 font-weight-bold">{props.currentLanguage.values.navbar.beforeAuth[1]}</Link>
               </>
               :
-              <>
-                LOGGED IN MAMACITA
-          </>
+              <AfterAuthNav showNavOptions={showNavOptions} setShowNavOptions={setShowNavOptions} />
           }
         </Nav>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" style={{ marginRight: "10px" }} />
         <Navbar.Collapse id="responsive-navbar-na">
-          <Nav className="ml-auto d-flex flex-row flex-wrap justify-content-center d-sm-none align-items-center">
+          <Nav className="ml-auto d-flex flex-column flex-wrap justify-content-center d-sm-none align-items-center">
             {
               !props.Details.isLoggedIn ?
                 <>
-                  <Link ref={(link) => links.push(link)} to="/signin" className="btn btn-primary rounded-0 text-light py-3 w-100" style={{ width: "45%" }}>{props.currentLanguage.values.navbar.beforeAuth[0]}</Link>
-                  <Link ref={(link) => links.push(link)} to="/signup" className="btn btn-light rounded-0 text-primary py-3 w-100" style={{ width: "45%" }}>{props.currentLanguage.values.navbar.beforeAuth[1]}</Link>
+                  <Link ref={(link) => links.push(link)} to="/signin" className="d-flex btn rounded-0 text-light py-3 w-100 text-center" style={{paddingRight:"30%",paddingLeft:"30%",width: "45%",fontFamily:"Alegreya Sans SC" }}>
+                    <img src="/img/navbar/beforeAuth/login.svg" width="30%" height="30" className="mr-2"/> {props.currentLanguage.values.navbar.beforeAuth[0]}
+                  </Link>
+                  <Link ref={(link) => links.push(link)} to="/signup" className="d-flex btn rounded-0 text-light py-3 w-100 text-center" style={{paddingRight:"30%",paddingLeft:"30%",width: "45%",fontFamily:"Alegreya Sans SC" }}>
+                    <img src="/img/navbar/beforeAuth/signup.svg" width="30%" height="30" className="mr-2"/> {props.currentLanguage.values.navbar.beforeAuth[1]}
+                  </Link>
                 </>
                 :
                 Object.keys(whenLoggedIn).map((k,i)=>{
-                  return <Link ref={(link)=>links.push(link)} key={i} to={whenLoggedIn[k].link} className={"btn whenIn rounded-0 py-3"} style={{width:whenLoggedIn[k].link === "/logout" ? "100%" : "50%",fontFamily:"Alegreya Sans SC"}}>{k}</Link>
+                  return <Link title={k} ref={(link)=>links.push(link)} key={i} to={whenLoggedIn[k].link} className={"btn whenIn d-flex rounded-0 py-3 "} style={{paddingLeft:"30%",paddingRight:"30%",width:"100%",fontFamily:"Alegreya Sans SC"}}><img src={"/img/navbar/afterAuth/"+whenLoggedIn[k].icon} width="30%" height="30px" alt=""/> <span style={{width:"85%"}}>{k}</span></Link>
                 })
             }
           </Nav>
@@ -86,6 +91,6 @@ function Naver(props) {
   );
 }
 
-const mapStateToProps = state => ({ Details: { ...state.AuthenticationStatus, ...state.CurrentUserDetails }, LanguagesArray: state.LanguagesArray, currentLanguage: state.currentLanguage, showLangsBar: state.showLangsBar })
+const mapStateToProps = state => ({ Details: { ...state.AuthenticationStatus, ...state.CurrentUserDetails }, LanguagesArray: state.LanguagesArray, currentLanguage: state.currentLanguage })
 
 export default connect(mapStateToProps)(Naver);

@@ -2,7 +2,6 @@ import objects from "./strcuts";
 import en from "../../langs/en"
 
 const initial = {
-    showLangsBar:false,
     currentLanguage:{
         name:"en",
         logo: "english.png",

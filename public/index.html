@@ -96,12 +96,15 @@
   nav #responsive-navbar-na a.whenIn{
     color: white;
     transition: .2s ease-out !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   nav #responsive-navbar-na a.whenIn:last-child{
     background-color: #dc3545;
     color: white;
     border: none;
-    clip-path: polygon(35% 100%,35% 0,65% 0,65% 100%);
+    /* clip-path: polygon(35% 100%,35% 0,65% 0,65% 100%); */
   }
   nav #responsive-navbar-na a.whenIn:hover:not(:last-child){
     background-color: white;
@@ -109,13 +112,6 @@
   }
   nav #responsive-navbar-na a.whenIn:last-child:hover{
     clip-path: polygon(0 100%,0 0,100% 0,100% 100%)
-  }
-  a.whenIn .icon-holder{
-    height: 30px;
-    width: 30px;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: 30 30;
   }
     </style>
     <!--
