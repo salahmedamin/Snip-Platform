@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 html{
   scroll-behavior: smooth;
   transition: scroll 1s;
@@ -97,4 +98,130 @@ a.hasNew span{
   height: 7px;
   border-radius: 50%;
   background: firebrick
+}
+.navArrow a:hover{
+  background-color: grey;
+}
+.regularChat{
+  background-color: #2350831a;
+  color: white;
+}
+.unreadChat{
+  background-color: rgba(128, 128, 128, 0.411);
+  color: #0a80ff!important;
+}
+.unreadChat .sender{
+  font-weight: bold;
+}
+.unreadChat .timeandoptions{
+  color: white
+}
+.selectedChat{
+  background: rgba(10, 116, 202, 0.712);
+  color: white
+}
+.chat{
+  transition: .25s cubic-bezier(0.075, 0.82, 0.165, 1)
+}
+.chat:hover{
+  background-color: crimson;
+  color: white !important;
+}
+.sendBtn{
+  background-repeat: no-repeat;
+  background-position: 60% center;
+  background-size:contain;
+  transition: .5s cubic-bezier(0.19, 1, 0.22, 1);
+  cursor: pointer;
+  height:40px;
+  width: 40px;
+  transform: rotate(90deg); 
+}
+.sendBtn:hover{
+  background-color: #0a80ff;
+  transform: rotate(90deg) scale(1.12);
+}
+@keyframes opacThenShow{
+  0% {
+    opacity: 0;
+  }
+  75%{
+    opacity: .5
+  }
+  100%{
+    opacity: 1;
+  }
+}
+.msgContentParent{
+  border: 1px solid transparent;
+  transition: .2s ease-in;
+  font-family:"Inter",sans-serif;
+  font-size: 14px;
+  animation: .5s opacThenShow forwards;
+}
+.msgContentParent.sender{
+  justify-content: flex-start;
+  width: 100%;
+}
+.msgContentParent.receiver{
+  justify-content: flex-end;
+  width: 75%;
+}
+@media only screen and (max-width:992px){
+  .msgContentParent.receiver{
+    justify-content: flex-end;
+    width: 100%;
+  }
+}
+@media only screen and (max-width:576px){
+  .convoResponsive{
+    transform: translateY(-100%);
+    background-color: #1a2236;
+    transition: .5s ease all;
+  }
+  #draggableExit:hover{
+    background-color: rgba(91, 107, 121, 0.288);
+  }
+}
+.msgContentParent.receiver span.content{
+  background-color: rgba(107, 107, 107, 0.664);
+  color: white;
+}
+.msgContentParent.sender span.content{
+  background-color: royalblue;
+  color: white;
+}
+@keyframes rotateY{
+  from{
+    transform: rotateY(0);
+  }
+  to{
+    transform: rotateY(360deg);
+  }
+}
+.rotateY{
+  animation: 2s rotateY infinite;
+}
+.messages_options{
+  transition: .5s ease all;border-radius:"50%";
+  width:30px;
+  height:28px;
+  margin:3px;
+  padding: 3px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+.messages_options:hover{
+  background-color: rgba(0,0,0,0.2);
+}
+.msgContentParent span div.showOnHover{
+  display: none;
+  opacity: 0;
+}
+.msgContentParent:hover span > .showOnHover{
+  animation: .4s opacThenShow forwards;
+  display: flex;
 }

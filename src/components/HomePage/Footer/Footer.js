@@ -3,7 +3,7 @@ const Footer = ()=>{
     return (
     <div className="w-100 d-flex" style={{height:"80px"}}>
         <div className="bg-dark position-relative d-flex justify-content-start align-items-center" style={{clipPath:"polygon(0 0,80px 0, 30px 80px,0 80px)",width:"80px",height:"80px"}}>
-            <Logo />
+            <Logo animate/>
         </div>
         <div className="h-100 d-flex flex-column justify-content-center align-items-center" style={{width:"calc( 100% - 80px )",fontFamily:"Alegreya Sans SC"}}>
             <div><strong>MADE WITH ❤ BY AMIN SALAH</strong></div>

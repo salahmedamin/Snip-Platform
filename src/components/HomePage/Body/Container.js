@@ -3,21 +3,8 @@ import { Link } from "react-router-dom";
 import Or from '../OrStyle'
 import {connect} from "react-redux"
 import Footer from "../Footer/Footer"
-import Axios from 'axios'
-import {useEffect} from 'react'
-import {getCookie,setCookie} from "../../../redux-data/cookieStuff"
 
 function MainContainer(props) {
-  // useEffect(() => {
-  //   const access = getCookie("Access-Token")
-  //   if(access && access.length > 0){
-  //     Axios.post("http://localhost:2500/tokenVerif",{token:getCookie("Access-Token")})
-  //     .then(v=>{
-  //       if(v.data.good) window.location.href = '/home'
-  //       else setCookie("Access-Token","",3000)
-  //     })
-  //   }
-  // }, [])
   return (
     <>
     <Container fluid className="w-100 h-auto p-0 d-flex justify-content-center position-relative" style={{fontFamily:"Alegreya Sans SC"}}>

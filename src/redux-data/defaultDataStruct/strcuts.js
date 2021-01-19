@@ -23,7 +23,7 @@ const objects = {
         }
     ],
     AuthenticationStatus:{
-        isLoggedIn: false,
+        isLoggedIn: null,
         JWT_TOKEN: null
     },
     CurrentUserDetails:{

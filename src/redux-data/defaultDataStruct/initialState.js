@@ -12,8 +12,24 @@ const initial = {
     AuthenticationStatus:objects.AuthenticationStatus,
     CurrentUserDetails:objects.CurrentUserDetails,
     Messaging:{
-        chatList:[objects.Messaging.ChatItem],
-        messagesList:[objects.Messaging.MessageItem]
+        chatList:[],
+        chatSearchList:[],
+        messagesList:{
+            contact: null,
+            messagesCount:null,
+            profilePic:"",
+            data: []
+        },
+        currentChat: {
+            id: null,
+            isGroup: null,
+            messagesIndex: 0,
+            isLoading: false
+        },
+        currentChatListState: {
+            chatsIndex: 0,
+            isLoading: false
+        }
     }
 }
 export default initial

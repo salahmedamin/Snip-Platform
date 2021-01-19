@@ -62,13 +62,14 @@ function Signin(props) {
           throw new Error(response.data.message)
         }
         else{
+          const AT = response.headers["access-token"],userRecords = response.data.userRecords
           let date = new Date();
           let days = 30
           date.setTime(date.getTime() + (days * 24 * 60 * 60 *1000));
           let expires = "; expires=" + date.toGMTString();
-          document.cookie = "Access-Token="+response.headers['access-token']+expires+";path=/"
-          store.dispatch({type:"SET_LOGGED_IN",payload:{JWT_TOKEN:response.headers['access-token']}})
-          store.dispatch({type:"SET_USER_DETAILS",payload:{records:response.data.userRecords}})
+          document.cookie = "Access-Token="+AT+expires+";path=/"
+          store.dispatch({type:"SET_LOGGED_IN",payload:{JWT_TOKEN:AT}})
+          store.dispatch({type:"SET_USER_DETAILS",payload:{records:userRecords}})
           props.launchLoading(false)
           window.location.href = "/home"
           throw new Error('')
