@@ -30,21 +30,29 @@ import store from "./redux-data/store"
 import {getCookie, setCookie} from "./redux-data/cookieStuff"
 
 
-//AXIOS
-import Axios from "axios"
+//socketio
+import io from "socket.io-client"
+
+
+import jsonwebtoken from "jsonwebtoken"
+import JWT_SECRET from "./jwt_secret"
+
+let socket = null
+
 
 class App extends React.PureComponent{
   // getting last selected language
   state = {
     hl:getCookie("hl"),
-    possible: ["ar","fr","en"]
+    possible: ["ar","fr","en"],
+    socket: null,
   }
-  
 
   logOut = ()=>{
     setCookie("Access-Token","",3000)
-    store.dispatch({type:"SET_LOGGED_OUT"})
-    window.location.href = "/"
+    store.dispatch({type:"SET_LOGGED_OUT",payload:{}})
+    //socket.emit("getOut",{username:this.props.GLOBAL_CURRENT_STATS.username})
+    return <Redirect to={"/"} push={true} />
   }
   
   componentDidMount(){
@@ -56,20 +64,25 @@ class App extends React.PureComponent{
       store.dispatch({type:"CHANGE_LANG",payload:{name:this.state.hl}})
     }
 
-
     if(this.props.GLOBAL_CURRENT_STATS.isLoggedIn==null){
       //login
       const authCookie = getCookie("Access-Token")
       if(authCookie.length > 0){
-        Axios.post("http://localhost:2500/tokenVerif",{token:authCookie}).then(ax =>{
-          if(ax.data.good){
-            store.dispatch({type:"SET_LOGGED_IN",payload:{JWT_TOKEN:authCookie}})
-            store.dispatch({type:"SET_USER_DETAILS",payload:{records:ax.data.records}})
-          }
-          else{
-            setCookie("Access-Token","",3000)
-          }
-        })
+        try{
+          let unzipped = jsonwebtoken.verify(authCookie,JWT_SECRET)
+          store.dispatch({type:"SET_LOGGED_IN",payload:{JWT_TOKEN:authCookie}})
+          store.dispatch({type:"SET_USER_DETAILS",payload:{records:unzipped}})
+          socket = io("http://localhost:3000",{
+            query: `username=${this.props.GLOBAL_CURRENT_STATS.username}`
+          })
+          socket.connect()
+        }
+        catch(err){
+          //logout
+          setCookie("Access-Token","",3000)
+          socket = null
+          store.dispatch({type:"SET_LOGGED_OUT"})
+        }
       }
     }
   }
@@ -85,7 +98,7 @@ class App extends React.PureComponent{
             <Route exact path="/" component={MainContainer}/>
             <Route path="/signin">
               {
-                this.props.GLOBAL_CURRENT_STATS.isLoggedIn ? <Redirect to={{pathname:"/messages"}} /> :
+                this.props.GLOBAL_CURRENT_STATS.isLoggedIn ? <Redirect to="/messages" push={false}/> :
                 ()=>(
                   <>
                     <MainContainer />
@@ -96,7 +109,7 @@ class App extends React.PureComponent{
             </Route>
             <Route path="/signup">
             {
-                this.props.GLOBAL_CURRENT_STATS.isLoggedIn ? <Redirect to={{pathname:"/messages"}} /> :
+                this.props.GLOBAL_CURRENT_STATS.isLoggedIn ? <Redirect to="/messages" push={false}/> :
                 ()=>(
                   <>
                     <MainContainer />
@@ -107,7 +120,7 @@ class App extends React.PureComponent{
             </Route>
             <Route path="/forgotPassword">
             {
-                this.props.GLOBAL_CURRENT_STATS.isLoggedIn ? <Redirect to={{pathname:"/messages"}} /> :
+                this.props.GLOBAL_CURRENT_STATS.isLoggedIn ? <Redirect to="/messages" push={false}/> :
                 ()=>(
                   <>
                     <MainContainer />

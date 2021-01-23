@@ -24,10 +24,10 @@ class BAM extends React.PureComponent {
     render = ()=>(
         <>
             <Link ref={(link) => !this.state.links.includes(link)?this.setState(prevState=>({...prevState,links:[...prevState.links,link]})):null} to="/signin" className="d-flex btn rounded-0 text-light py-3 w-100 text-center" style={{paddingRight:"30%",paddingLeft:"30%",width: "45%",fontFamily:"Alegreya Sans SC" }}>
-                <img src="/img/navbar/beforeAuth/login.svg" width="30%" height="30" className="mr-2"/> {this.props.currentLanguage.values.navbar.beforeAuth[0]}
+                <img src="/img/navbar/beforeAuth/login.svg" alt="Signin" width="30%" height="30" className="mr-2"/> {this.props.currentLanguage.values.navbar.beforeAuth[0]}
             </Link>
             <Link ref={(link) => !this.state.links.includes(link)?this.setState(prevState=>({...prevState,links:[...prevState.links,link]})):null} to="/signup" className="d-flex btn rounded-0 text-light py-3 w-100 text-center" style={{paddingRight:"30%",paddingLeft:"30%",width: "45%",fontFamily:"Alegreya Sans SC" }}>
-                <img src="/img/navbar/beforeAuth/signup.svg" width="30%" height="30" className="mr-2"/> {this.props.currentLanguage.values.navbar.beforeAuth[1]}
+                <img src="/img/navbar/beforeAuth/signup.svg" alt="Signup" width="30%" height="30" className="mr-2"/> {this.props.currentLanguage.values.navbar.beforeAuth[1]}
             </Link>
         </>
     )

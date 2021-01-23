@@ -11,7 +11,30 @@ const Reducer = (state/*=initialState*/,action)=>{
             return {...state,CurrentUserDetails:action.payload.records}
         
         case "SET_LOGGED_OUT":
-            return {...state,AuthenticationStatus:{...objects.AuthenticationStatus,isLoggedIn:false},CurrentUserDetails:objects.CurrentUserDetails}
+            return {
+                ...state,
+                AuthenticationStatus:{...objects.AuthenticationStatus,isLoggedIn:false},
+                CurrentUserDetails:objects.CurrentUserDetails,
+                Messaging:{
+                    ...state.Messaging,
+                    chatList: [],
+                    chatSearchList: [],
+                    messagesList: {
+                        data:[]
+                    },
+                    currentChat:{
+                        id:null,
+                        isGroup:null,
+                        messagesIndex:0,
+                        isLoading:false,
+                        isReplying:false
+                    },
+                    currentChatListState:{
+                        chatIndex:0,
+                        isLoading: false
+                    }
+                }
+            }
 
         case "SWITCH_LANG_BAR":
             return {...state,showLangsBar:!state.showLangsBar}
@@ -62,7 +85,7 @@ const Reducer = (state/*=initialState*/,action)=>{
                     ...state.Messaging,
                     currentChat:{
                         ...state.Messaging.currentChat,
-                        messagesIndex: !action.payload.zerofy ? state.Messaging.currentChat.messagesIndex+1 : -1
+                        messagesIndex: !action.payload.zerofy ? state.Messaging.currentChat.messagesIndex+1 : 0
                     }
                 }
             }
@@ -76,7 +99,12 @@ const Reducer = (state/*=initialState*/,action)=>{
                 Messaging:
                     {...state.Messaging,
                     chatList:
-                        state.Messaging.chatList.map(v=>v.contact==action.payload.other ? {...v,unreadCount:0} : {...v})
+                        state.Messaging.chatList.map(v=>
+                            !action.payload.isGroup ? 
+                            (v.contact==action.payload.other ? {...v,unreadCount:0} : {...v})
+                            : 
+                            (parseInt(v.id) == parseInt(action.payload.other) ? {...v,unreadCount:0} : {...v})
+                         )
                     }
             }
 
@@ -91,6 +119,50 @@ const Reducer = (state/*=initialState*/,action)=>{
                     }
                 }
             }
+        
+        case "SET_MESSAGING_REPLY_DATA":
+            return {
+                ...state,
+                Messaging:{
+                    ...state.Messaging,
+                    currentChat:{
+                        ...state.Messaging.currentChat,
+                        isReplying: action.payload.isReplying,
+                        replyTo:{
+                            id: action.payload.isReplying ? action.payload.replyID : null,
+                            content: action.payload.isReplying ? action.payload.replyContent : null
+                        }
+                    }
+                }
+            }
+
+        case "UserSentSingleMessage":
+            return{
+                ...state,
+                Messaging:{
+                    ...state.Messaging,
+                    messagesList:{
+                        ...state.Messaging.messagesList,
+                        data:[
+                            action.payload.msg,
+                            ...state.Messaging.messagesList.data
+                        ]
+                    },
+                    chatList:
+                    [
+                        {
+                            ...state.Messaging.chatList.find(chat=>{
+                                return !action.payload.isGroup ? chat.contact == action.payload.contact : parseInt(chat.id) === parseInt(action.payload.contact)
+                            }),
+                            lastMessage: action.payload.msg
+                        },
+                        ...state.Messaging.chatList.filter(chat=>{
+                            return !action.payload.isGroup ? chat.contact !== action.payload.contact : parseInt(chat.id) !== parseInt(action.payload.contact)
+                        })
+                    ]
+                }
+            }
+
 
         default :
             return state

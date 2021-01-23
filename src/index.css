@@ -124,7 +124,7 @@ a.hasNew span{
   transition: .25s cubic-bezier(0.075, 0.82, 0.165, 1)
 }
 .chat:hover{
-  background-color: crimson;
+  background-color: rgba(128, 128, 128, 0.315);
   color: white !important;
 }
 .sendBtn{
@@ -146,7 +146,7 @@ a.hasNew span{
     opacity: 0;
   }
   75%{
-    opacity: .5
+    opacity: 1
   }
   100%{
     opacity: 1;
@@ -221,7 +221,14 @@ a.hasNew span{
   display: none;
   opacity: 0;
 }
-.msgContentParent:hover span > .showOnHover{
+.msgContentParent:hover span > .showOnHover, .showOnHover.stick{
   animation: .4s opacThenShow forwards;
-  display: flex;
+  display: flex!important;
+}
+._emoji_{
+  transition: .5s ease all;
+  background-color: transparent;
+}
+._emoji_:hover{
+  background-color: rgba(0,0,0,0.6);
 }

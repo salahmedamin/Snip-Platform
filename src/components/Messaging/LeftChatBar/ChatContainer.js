@@ -27,5 +27,8 @@ const Container = (props)=>
                 }
             </div>
 
-const getSelected = state=>({isGroup: state.Messaging.currentChat.isGroup,currentID: state.Messaging.currentChat.id})
+const getSelected = state=>({
+    isGroup: state.Messaging.currentChat.isGroup,
+    currentID: state.Messaging.currentChat.id
+})
 export default connect(getSelected)(Container)

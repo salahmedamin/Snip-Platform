@@ -2,7 +2,7 @@ import {Col,Button,Form} from 'react-bootstrap'
 import ReCAPTCHA from "react-google-recaptcha";
 import validator from 'validator';
 import {useState,useRef} from 'react'
-import { Link } from 'react-router-dom'
+import { Link,Redirect } from 'react-router-dom'
 import Axios from 'axios'
 import {connect} from "react-redux"
 import store from "../.././../redux-data/store"
@@ -43,7 +43,6 @@ function Signin(props) {
       }
       if(emailValid && goodPW && !disabled){
         props.launchLoading(true)
-        recap.current.reset()
         let response = await Axios.post(process.env.REACT_APP_ENDPOINT+"/signin",
             {
               email:document.querySelector("input[type=email]").value,
@@ -55,7 +54,8 @@ function Signin(props) {
               baseURL:"http://localhost:3000",
               headers:{
                 "Content-Type":"application/json"
-              }
+              },
+              timeout: 4000
             }
         )
         if(!response.data.success){
@@ -70,9 +70,7 @@ function Signin(props) {
           document.cookie = "Access-Token="+AT+expires+";path=/"
           store.dispatch({type:"SET_LOGGED_IN",payload:{JWT_TOKEN:AT}})
           store.dispatch({type:"SET_USER_DETAILS",payload:{records:userRecords}})
-          props.launchLoading(false)
-          window.location.href = "/home"
-          throw new Error('')
+          return window.location.href = "/messages"
         }
       }
       else{
@@ -81,7 +79,9 @@ function Signin(props) {
     }
     catch(err){
       props.launchLoading(false)
-      seterrorMessage(err.message)
+      if(err.message.length > 0 ) recap.current.reset()
+      if(err.message == "timeout of 4000ms exceeded") seterrorMessage("Network Error")
+      else seterrorMessage(err.message)
     }
   }
   return (
@@ -90,13 +90,13 @@ function Signin(props) {
       <div className={"col-12 btn btn-outline-danger mb-3"+(errorMessage.length===0?" d-none":'')}>{errorMessage}</div>
       <Form.Row className="mb-2">
         <Col>
-          <Form.Control placeholder={email} className={emailValid?" border-success" : emailValid === undefined ? "" : "border-danger"} id="email" onBlur={(e)=>isEmail(e)} autoComplete="nope" type="email"/>
+          <Form.Control placeholder={email} className={emailValid?" border-success" : emailValid === undefined ? "" : "border-danger"} id="email" onBlur={(e)=>isEmail(e)} autoComplete="off" type="email"/>
           <div className={(emailValid || emailValid === undefined?"d-none":"d-block")+" btn-danger rounded-bottom px-1"}>{emailError}</div>
         </Col>
       </Form.Row>
       <Form.Row className="mb-3">
         <Col>
-          <Form.Control type="password" placeholder={pass} id="password" onBlur={(e)=>isGoodPW(e)} className={goodPW?" border-success" : goodPW === undefined ? "" : "border-danger rounded-0 rounded-top"} autoComplete="neww"/>  
+          <Form.Control type="password" placeholder={pass} id="password" onBlur={(e)=>isGoodPW(e)} className={goodPW?" border-success" : goodPW === undefined ? "" : "border-danger rounded-0 rounded-top"} autoComplete="off"/>  
           <div className={(goodPW || goodPW === undefined?"d-none":"d-block")+" btn-danger rounded-bottom px-1"}>{passError}</div>
         </Col> 
       </Form.Row>

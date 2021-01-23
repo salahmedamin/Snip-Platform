@@ -56,7 +56,7 @@ class Naver extends React.PureComponent{
 const mapStateToProps = state => ({ 
   Details: { ...state.AuthenticationStatus, ...state.CurrentUserDetails }, 
   LanguagesArray: state.LanguagesArray, currentLanguage: state.currentLanguage,
-  hasNewMessages: state.Messaging.chatList.filter(v=>v.unreadCount>0).length>0
+  hasNewMessages: state.Messaging.chatList.filter(v=>v.unreadCount>0 && (v.isGroup ? v.lastMessage.sender !== state.CurrentUserDetails.username:true)).length>0
 })
 
 export default connect(mapStateToProps)(Naver);

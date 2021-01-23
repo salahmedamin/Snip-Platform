@@ -24,7 +24,12 @@ const initial = {
             id: null,
             isGroup: null,
             messagesIndex: 0,
-            isLoading: false
+            isLoading: false,
+            isReplying: false,
+            replyTo:{
+                id: null,
+                content:null
+            }
         },
         currentChatListState: {
             chatsIndex: 0,

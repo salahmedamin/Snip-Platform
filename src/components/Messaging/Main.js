@@ -1,7 +1,7 @@
 import {Row,Container} from "react-bootstrap"
-import SearchBar from "./SearchBar";
-import Convo from "./Convo"
-import ChatContainer from "./ChatContainer"
+import SearchBar from "./LeftChatBar/SearchBar";
+import Convo from "./MessagesPart/Convo"
+import ChatContainer from "./LeftChatBar/ChatContainer"
 import {useState,useEffect} from "react"
 import Axios from "axios"
 import {connect} from "react-redux"
@@ -11,30 +11,40 @@ import {useLocation} from "react-router-dom"
 const Main = (props)=>{
     const history = useLocation(),
     [searchVal, setSearchVal] = useState('')
-    
-    // set index to props.currentChatListStats.chatIndex and before passing an XHR req. check if it has more !
+
+
+
+    //when scrolling chats
     useEffect(() => {
         if(props.username !== null){
             Axios.post("http://localhost:2500/messages/loadChats",
             {
                 user:props.username,
-                index:props.currentChatListStats.chatsIndex,
+                index:props.currentChatListState.chatsIndex,
                 token: props.token
             }
             ).then(v=>{
                 store.dispatch({type:"SET_CHAT_LIST",payload:{chats:v.data}})
             })
         }
-    }, [props.username,props.currentChatListStats.chatIndex])
+    }, [props.currentChatListState.chatIndex])
 
 
-    //first loaded messages
+
+
+    //when changing chat tab
     useEffect(() => {
+        store.dispatch(
+            {type:"SET_CURRENT_CHAT",
+            payload:{
+                isGroup: props.match.params.groupID !== undefined,
+                id:(props.match.params.groupID||props.match.params.user)
+            }
+        })
 
-        if((props.match.params.user || props.match.params.groupID) && props.username){
-
-
-            // get all messages first
+        if(props.match.params.user||props.match.params.groupID){
+            store.dispatch({type:"INCREMENT_MESSAGES_INDEX",payload:{zerofy:true}})
+            //get all messages in index 0, WOULDNT RUN ANY OTHER PROCESS ^^
             Axios.post("http://localhost:2500/messages/paginate",
             {
                 username:props.username,
@@ -43,23 +53,32 @@ const Main = (props)=>{
                 isGroup: history.pathname.startsWith("/messages/groups/"),
                 token:props.token
             }).then(v=>{
-                if(v.data.length !== 0){
-                    store.dispatch({type:"SET_MESSAGES_LIST",payload:{messages:v.data,add:false}})
-                    store.dispatch({type:"SET_MESSAGES_LOADING",payload:{loading:false}})
-                }
+                store.dispatch({type:"SET_MESSAGES_LIST",payload:{messages:v.data,add:false}})
+                store.dispatch({type:"SET_MESSAGES_LOADING",payload:{loading:false}})
             })
+        }
 
-            //if our guy here has some unread stuff, let's set it as read !
-            props.chatList.forEach(v=>{
-                if(v.contact == props.match.params.user && v.unreadCount > 0){
-                    const username = props.username,other=v.contact
-                    Axios.post("http://localhost:2500/messages/readFullConvo",{
-                    user:username,
-                    other:other
-                    })
-                    .then(v=>{
-                        if(v.data){
-                            if(v.data.length !== 0) store.dispatch({type:"SET_CONVO_READ",payload:{other:other}})
+
+
+        // check if this chat has unread count > 0
+        
+        const isGroupOfUnread = history.pathname.startsWith("/messages/groups/")
+        let currentChat = props.chatList.find(v=> !isGroupOfUnread ? Object.keys(props.match.params).length>0 && v.contact == props.match.params.user : parseInt(v.id) == parseInt(props.match.params.groupID))
+        if(currentChat && currentChat.unreadCount >0 && (isGroupOfUnread ? currentChat.lastMessage.sender !== props.username : true)){
+
+            Axios.post("http://localhost:2500/messages/readFullConvo",{
+                user: props.username,
+                other:props.match.params.groupID || props.match.params.user,
+                isGroup: isGroupOfUnread,
+                token: props.token
+            })
+            .then(v=>{
+                if(v.data && v.data.length !== 0){
+                    store.dispatch({
+                        type:"SET_CONVO_READ",
+                        payload:{
+                            other:props.match.params.user || props.match.params.groupID,
+                            isGroup: isGroupOfUnread,
                         }
                     })
                 }
@@ -67,22 +86,25 @@ const Main = (props)=>{
 
 
         }
-        else if(!(props.match.params.user && props.match.params.groupID) && props.username){
+
+
+        return () => {
+            store.dispatch(
+                {type:"SET_CURRENT_CHAT",
+                payload:{
+                    isGroup: null,
+                    id:null
+                }
+            })
             store.dispatch({type:"SET_MESSAGES_LIST",payload:{messages:{data:[]},add:false}})
-        } 
-        store.dispatch(
-            {type:"SET_CURRENT_CHAT",
-            payload:{
-                isGroup: props.match.params.groupID !== undefined,
-                id:(props.match.params.groupID||props.match.params.user)
-            }
-        })
-        store.dispatch({type:"INCREMENT_MESSAGES_INDEX",payload:{zerofy:true}})
-    }, [props.match.params.groupID,props.match.params.user,props.username])
+        }
+    }, [props.match.params.user,props.match.params.groupID,props.username])
+
 
 
     //on scroll for new messages in messagesList
     useEffect(() => {
+        if(props.currentMessagesListStats.messagesIndex == 0) return;
         //activate our loader spinner
         store.dispatch({type:"SET_MESSAGES_LOADING",payload:{loading:true}})
         Axios.post("http://localhost:2500/messages/paginate",
@@ -93,12 +115,16 @@ const Main = (props)=>{
                 isGroup: history.pathname.startsWith("/messages/groups/"),
                 token:props.token
             }).then(v=>{
+                if(v.data.length == 0) return;
                 store.dispatch({type:"SET_MESSAGES_LIST",payload:{messages:v.data,add:true}})
                 //desactivate our loader
                 store.dispatch({type:"SET_MESSAGES_LOADING",payload:{loading:false}})
             })
     }, [props.currentMessagesListStats.messagesIndex])
 
+
+
+    //searching in chat search
     useEffect(() => {
         if(searchVal.length > 0){
             Axios.post("http://localhost:2500/messages/searchChats",
@@ -106,7 +132,11 @@ const Main = (props)=>{
                 user:props.username,
                 keyword:searchVal,
                 token:props.token
-            }).then(v=>store.dispatch({type:"SET_CHAT_SEARCH",payload:{chats:v.data}}))
+            }).then(v=>v.data.length> 0 ? 
+                store.dispatch({type:"SET_CHAT_SEARCH",payload:{chats:v.data}})
+                :
+                null
+                )
         }
         else{
             store.dispatch({type:"SET_CHAT_SEARCH",payload:{chats:[]}})
@@ -145,9 +175,10 @@ const getUserSessionDetails = state =>
         chatList: state.Messaging.chatList,
         chatSearchList: state.Messaging.chatSearchList,
         messagesLength: state.Messaging.messagesList.data ? state.Messaging.messagesList.data.length : 0,
-        currentChatListStats: state.Messaging.currentChatListState,
+        currentChatListState: state.Messaging.currentChatListState,
         currentMessagesListStats: state.Messaging.currentChat,
-        token:state.AuthenticationStatus.JWT_TOKEN
+        token:state.AuthenticationStatus.JWT_TOKEN,
+        contact: state.Messaging.messagesList.contact,
     }
 )
 export default connect(getUserSessionDetails)(Main)

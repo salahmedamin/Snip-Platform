@@ -1,8 +1,8 @@
 import {Row} from "react-bootstrap"
-import Compose from "./Compose"
+import Compose from "./WriteMessage/Compose"
 import Messages from "./Messages"
 import GoBack from "./GoBack"
-import Loader from "../_Loader/Loader"
+import Loader from "../../_Loader/Loader"
 import {connect} from "react-redux"
 const Convo = (props)=>{
 
@@ -19,5 +19,9 @@ const Convo = (props)=>{
         </>
     );
 }
-const getLoadState = state=>({isLoading:state.Messaging.currentChat.isLoading})
+const getLoadState = state=>(
+    {
+        isLoading:state.Messaging.currentChat.isLoading,
+    }
+)
 export default connect(getLoadState)(Convo)
