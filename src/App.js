@@ -37,6 +37,11 @@ import io from "socket.io-client"
 import jsonwebtoken from "jsonwebtoken"
 import JWT_SECRET from "./jwt_secret"
 
+//general use
+import ScreenPopUp from "./components/GeneralUse/ScreenPopUp"
+import Loader from "./components/_Loader/Loader"
+import LateralNotification from './components/GeneralUse/LateralNotification'
+
 let socket = null
 
 
@@ -50,7 +55,7 @@ class App extends React.PureComponent{
 
   logOut = ()=>{
     setCookie("Access-Token","",3000)
-    store.dispatch({type:"SET_LOGGED_OUT",payload:{}})
+    store.dispatch({type:"SET_LOGGED_OUT"})
     //socket.emit("getOut",{username:this.props.GLOBAL_CURRENT_STATS.username})
     return <Redirect to={"/"} push={true} />
   }
@@ -91,7 +96,38 @@ class App extends React.PureComponent{
     return(
       <>
       <BrowserRouter>
-  
+      {
+        this.props.general.Loader.show ?
+        <Loader left="45%" top="40%"/>
+        :
+        null
+      }
+      {
+        this.props.general.ScreenPopUp.show ?
+        <ScreenPopUp/>
+        :
+        null
+      }
+      {
+        this.props.general.Notifications.length > 0 ?
+
+      <div 
+        style={{
+            top:70,
+            right:this.props.general.Notifications.every(n=>n.finishedAnimation) ? "-80%" : 25,
+            zIndex:"99",
+            position:"fixed"
+          }}
+        className="d-flex flex-column justify-content-center align-items-center">
+        {
+          this.props.general.Notifications.map((nf,i)=>(
+            <LateralNotification key={i} id={nf.id} type={nf.type} slideFrom={nf.slideFrom} content={nf.content}/>
+          ))
+        }
+      </div>
+        :
+        null
+      }
         <NavBar />
   
         <Switch>
@@ -154,6 +190,12 @@ class App extends React.PureComponent{
   
 }
 
-const mapSt = state=>({GLOBAL_CURRENT_STATS: {...state.AuthenticationStatus,...state.CurrentUserDetails} })
+const mapSt = state=>({
+  GLOBAL_CURRENT_STATS: {
+    ...state.AuthenticationStatus,
+    ...state.CurrentUserDetails
+  },
+  general: state.GeneralUse
+})
 
 export default connect(mapSt)(App);

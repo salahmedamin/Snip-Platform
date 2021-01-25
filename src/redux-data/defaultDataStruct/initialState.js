@@ -12,6 +12,7 @@ const initial = {
     AuthenticationStatus:objects.AuthenticationStatus,
     CurrentUserDetails:objects.CurrentUserDetails,
     Messaging:{
+        blocked: [],
         chatList:[],
         chatSearchList:[],
         messagesList:{
@@ -35,6 +36,32 @@ const initial = {
             chatsIndex: 0,
             isLoading: false
         }
+    },
+    GeneralUse:{
+        ScreenPopUp: {
+            show: false,
+            isLoading: false,
+            title:'',
+            width: {
+                xs:12,
+                sm: 7,
+                md: 5,
+                lg:3
+            },
+            iterableData:{
+                rows: [], //rows name => data object attributes
+                data:[],
+                colStyling: [
+                    //each styling object will match the nth column
+                ],
+            }
+        },
+        Loader:{
+            show: false
+        },
+        Notifications:[
+            //object format should have content,type,href?
+        ]
     }
 }
 export default initial

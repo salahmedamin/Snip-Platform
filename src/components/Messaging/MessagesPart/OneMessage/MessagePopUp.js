@@ -1,6 +1,6 @@
 import emoji from 'react-easy-emoji'
 import {useEffect} from "react"
-export default (props)=>{
+const MessageOnHoverPopUp =  (props)=>{
     const emojis = ["❤","😂","👍","🥺","😢","🤢"]
     useEffect(() => {
         const closeIt = ()=>{
@@ -15,7 +15,7 @@ export default (props)=>{
         <>
             <div 
             className="d-flex flex-row justify-content-center align-items-center position-absolute bg-dark rounded-lg" 
-            style={{bottom:props.type == "threedots" ? "6px" : 0,left:props.isSender ? "100%" : null,right:!props.isSender ? "100%" : null,height:"auto",width:"auto",minWidth:"100px",maxWidth:"200px",whiteSpace:"nowrap",cursor:"pointer",animation:".5s opacThenShow forwards"}}
+            style={{overflow:"hidden",bottom:"83%",left:props.isSender ? (props.type == "emojis" ?  "-20%" : "79%"): null,right:!props.isSender ? ( props.type == "emojis" ? "10%":"calc( 100% + 8px )"):null,height:"auto",width:"auto",minWidth:"100px",maxWidth:"200px",whiteSpace:"nowrap",cursor:"pointer",animation:".5s opacThenShow forwards",zIndex:10}}
             >
                 {
                     props.type == "threedots" ?
@@ -28,8 +28,8 @@ export default (props)=>{
                 <>
                     {emojis.map((emo,i)=>{
                         return <div 
-                        className="_emoji_"
-                        style={{transition:".5s ease all",fontSize:"17px",textAlign:"center",padding:5,width:"20%"}}
+                        key={i}
+                        className={"_emoji_"+(props.currentUserReaction && props.currentUserReaction == i ? " selected" : '')}
                         //onClick={()=>{}}
                         >
                             {emoji(emo)}
@@ -43,3 +43,4 @@ export default (props)=>{
         </>
     )
 }
+export default MessageOnHoverPopUp

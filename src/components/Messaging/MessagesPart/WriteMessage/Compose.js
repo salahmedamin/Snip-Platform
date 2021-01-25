@@ -1,7 +1,7 @@
 import {connect} from "react-redux"
 import store from "../../../../redux-data/store"
 import MessageReply from "./MessageReply"
-import Emoji from "../../../SVG/Messages/emoji"
+import Emoji from "../../../SVG/Messages/MessageOptions/emoji"
 import Picker from 'emoji-picker-react';
 import {useState,useRef} from "react"
 import Axios from "axios";
@@ -17,16 +17,19 @@ const Compose =  (props)=>{
         isHint: false,
         token: props.token
         }
-        Axios.post(process.env.REACT_APP_ENDPOINT+"/messages/sendSingleMessage",data)
-        .then(v=>{
-            const msg = v.data
-            store.dispatch({type:"UserSentSingleMessage",payload:{
-                msg,
-                isGroup: msg.groupID !== -1,
-                contact: props.contact
-            }})
-            ref2.current.value = ""
-        })
+        if(ref2.current.value.length == 0) ref2.current.focus()
+        else{
+            Axios.post(process.env.REACT_APP_ENDPOINT+"/messages/sendSingleMessage",data)
+            .then(v=>{
+                const msg = v.data
+                store.dispatch({type:"UserSentSingleMessage",payload:{
+                    msg,
+                    isGroup: msg.groupID !== -1,
+                    contact: props.contact
+                }})
+                ref2.current.value = ""
+            })
+        }
     }
     let ref1 = useRef(),ref2 = useRef()
     return(
@@ -38,20 +41,18 @@ const Compose =  (props)=>{
                 :
                 null
             }
-            <input ref={ref2} type="text" placeholder="Write a message" className="py-2 pl-3 bg-transparent col-9 col-md-10 col-lg-8 rounded-lg" style={{outline:"none",color:"white",border:"1px solid #293145"}}/>
+            <textarea ref={ref2} placeholder="Write a message" className="py-1 pl-3 bg-transparent col-8 col-md-9 col-lg-7 rounded-sm" style={{outline:"none",color:"white",border:"1px solid #293145",resize:"none"}}/>
             
             <div 
-            className="d-flex justify-content-center align-items-center p-1"
+            className="d-flex justify-content-center align-items-center p-1 col-2 col-md-1"
             onClick={()=>setShowPicker(!showPicker)} 
             ref={ref1}
-            style={{marginLeft:"15px",marginRight:"-25px",cursor:"pointer",zIndex:4,transition:".5s ease all",borderRadius:"50%"}}
-            onMouseOver={()=>ref1.current.style.backgroundColor="rgb(0,0,0,.4)"}
-            onMouseOut={()=>ref1.current.style.backgroundColor=""}
+            style={{zIndex:4,transition:".5s ease all",borderRadius:"50%"}}
             >
-                <Emoji height="25px" width="25px"/>
+                <Emoji height="25px" width="25px" cursor="pointer"/>
             </div>
 
-            <div className="h-100 p-0 d-flex justify-content-center align-items-center col-3 col-md-2 col-lg-1" style={{width:45}}>
+            <div className="h-100 p-0 d-flex justify-content-center align-items-center col-2 col-md-2 col-lg-1" style={{width:45}}>
                 <div 
                 className="sendBtn rounded-circle" 
                 style={{backgroundImage:"url(/img/messages/send.svg)"}}

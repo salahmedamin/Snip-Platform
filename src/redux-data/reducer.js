@@ -27,7 +27,7 @@ const Reducer = (state/*=initialState*/,action)=>{
                         isGroup:null,
                         messagesIndex:0,
                         isLoading:false,
-                        isReplying:false
+                        isReplying:false,
                     },
                     currentChatListState:{
                         chatIndex:0,
@@ -91,7 +91,35 @@ const Reducer = (state/*=initialState*/,action)=>{
             }
 
         case "SET_CURRENT_CHAT":
-            return {...state,Messaging:{...state.Messaging,currentChat:{...state.Messaging.currentChat,isGroup: action.payload.isGroup,id:action.payload.id}}}
+            return {
+                ...state,
+                Messaging:{
+                    ...state.Messaging,
+                    currentChat:{
+                        ...state.Messaging.currentChat,
+                        isGroup: action.payload.isGroup,
+                        id:action.payload.id,
+                    }
+                }
+            }
+
+        case "ADD_BLOCKED_CONTACT":
+            return {
+                ...state,
+                Messaging:{
+                    ...state.Messaging,
+                    blocked: [...state.Messaging.blocked,...action.payload.blocked]
+                }
+            }
+
+        case "REMOVE_BLOCKED_CONTACT":
+            return{
+                ...state,
+                Messaging:{
+                    ...state.Messaging,
+                    blocked: state.Messaging.blocked.filter(e=>e.username !== action.payload.username)
+                }
+            }
         
         case "SET_CONVO_READ":
             return {
@@ -159,10 +187,158 @@ const Reducer = (state/*=initialState*/,action)=>{
                         ...state.Messaging.chatList.filter(chat=>{
                             return !action.payload.isGroup ? chat.contact !== action.payload.contact : parseInt(chat.id) !== parseInt(action.payload.contact)
                         })
-                    ]
+                    ],
                 }
             }
 
+
+
+
+
+
+            //general components : pop up and loader and ...
+
+            //popup
+            case "SHOW_SCREEN_POP_UP":
+                return{
+                    ...state,
+                    GeneralUse:{
+                        ...state.GeneralUse,
+                        ScreenPopUp: {
+                            ...state.GeneralUse.ScreenPopUp,
+                            show: true,
+                        }
+                    }
+                }
+
+            case "RESET_SCREEN_POP_UP":
+                return{
+                    ...state,
+                    GeneralUse:{
+                        ...state.GeneralUse,
+                        ScreenPopUp:{
+                            ...state.GeneralUse.ScreenPopUp,
+                            title: "",
+                            show:false,
+                            isLoading: false,
+                            width:{
+                                xs: 0,
+                                sm: 0,
+                                md: 0,
+                                lg: 0
+                            },
+                            iterableData:{
+                                rows:[],
+                                colStyling:[],
+                                data:[]
+                            }
+                        }
+                    }
+                }
+
+            case "SET_SCREEN_POP_UP_LOADING":
+                return {
+                    ...state,
+                    GeneralUse:{
+                        ...state.GeneralUse,
+                        ScreenPopUp:{
+                            ...state.GeneralUse.ScreenPopUp,
+                            title: action.payload.title,
+                            isLoading: true,
+                            width:{
+                                xs: action.payload.width.xs,
+                                sm: action.payload.width.sm,
+                                md: action.payload.width.md,
+                                lg: action.payload.width.lg
+                            }
+                        }
+                    }
+                }
+            
+                case "SET_SCREEN_POP_UP_DONE_LOADING":
+                return {
+                    ...state,
+                    GeneralUse:{
+                        ...state.GeneralUse,
+                        ScreenPopUp:{
+                            ...state.GeneralUse.ScreenPopUp,
+                            isLoading: false,
+                        }
+                    }
+                }
+
+
+            case "SET_SCREEN_POP_UP_DATA": //set rows and data
+                return{
+                    ...state,
+                    GeneralUse:{
+                        ...state.GeneralUse,
+                        ScreenPopUp:{
+                            ...state.GeneralUse.ScreenPopUp,
+                            title: state.GeneralUse.ScreenPopUp.title||action.payload.title,
+                            iterableData:{
+                                rows: action.payload.rows,
+                                colStyling: action.payload.colStyling,
+                                data: action.payload.data
+                            },
+                        }
+                    }
+                }
+
+            //loader
+            case "SET_SNIP_LOADING":
+                return{
+                    ...state,
+                    GeneralUse:{
+                        ...state.GeneralUse,
+                        Loader:{
+                            show: action.payload.value
+                        }
+                    }
+                }
+            case "ADD_NOTIFICATION":
+                return{
+                    ...state,
+                    GeneralUse:{
+                        ...state.GeneralUse,
+                        Notifications:[
+                            ...state.GeneralUse.Notifications,
+                            {
+                                ...action.payload.notification,
+                                finishedAnimation: false
+                            }
+                        ]
+                    }
+                }
+
+            case "FINISH_NOTIFICATION_ANIMATION":
+                return{
+                    ...state,
+                    GeneralUse:{
+                        ...state.GeneralUse,
+                        Notifications:[
+                            ...state.GeneralUse.Notifications,
+                            {
+                                ...state.GeneralUse.Notifications.find(
+                                    n=> n.id === action.payload.id
+                                ),
+                                finishedAnimation: true
+                            }
+                        ]
+                    }
+                }
+
+            case "REMOVE_NOTIFICATION":
+                return{
+                    ...state,
+                    GeneralUse:{
+                        ...state.GeneralUse,
+                        Notifications:
+                        state.GeneralUse.Notifications.filter(
+                            nf=>nf.id !== action.payload.id
+                        )
+                    }
+                }
 
         default :
             return state

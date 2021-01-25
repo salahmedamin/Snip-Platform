@@ -15,9 +15,12 @@ const Container = (props)=>
                     )
                 }
                 {
-                    props.chatSearchList.length>0 && props.searchVal.length>0 && props.chatSearchList.map((chat,index)=> 
-                        <Chat key={index} isSender={chat.lastMessage.sender == props.username} username={props.username} isSearch={true} {...chat} setSearchVal={props.setSearchVal}/>
-                    )
+                    props.chatSearchList.length>0 && props.searchVal.length>0 ?
+                        props.chatSearchList.map((chat,index)=> 
+                            <Chat key={index} isSender={chat.lastMessage.sender == props.username} username={props.username} isSearch={true} {...chat} setSearchVal={props.setSearchVal}/>
+                        )
+                    :
+                        null
                 }
                 {
                     props.searchVal.length > 0 && props.chatSearchList.length == 0 ?

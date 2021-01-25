@@ -7,11 +7,11 @@ import Axios from "axios"
 import {connect} from "react-redux"
 import store from "../../redux-data/store"
 import {useLocation} from "react-router-dom"
+import EmptyChat from "../SVG/Messages/ManCarryingBox"
 
 const Main = (props)=>{
     const history = useLocation(),
     [searchVal, setSearchVal] = useState('')
-
 
 
     //when scrolling chats
@@ -24,7 +24,18 @@ const Main = (props)=>{
                 token: props.token
             }
             ).then(v=>{
+                //setting the list
                 store.dispatch({type:"SET_CHAT_LIST",payload:{chats:v.data}})
+                //add blocked people to blocked state array
+                store.dispatch({
+                    type:"ADD_BLOCKED_CONTACT",
+                    payload:{
+                        blocked: 
+                            v.data
+                            .filter(chat=>chat.isBlocked || chat.isBlocker)
+                            .map(c=>c.contact !== null ? c.contact : null)
+                    }
+                })
             })
         }
     }, [props.currentChatListState.chatIndex])
@@ -34,15 +45,17 @@ const Main = (props)=>{
 
     //when changing chat tab
     useEffect(() => {
+
         store.dispatch(
             {type:"SET_CURRENT_CHAT",
             payload:{
                 isGroup: props.match.params.groupID !== undefined,
-                id:(props.match.params.groupID||props.match.params.user)
+                id:(props.match.params.groupID !== undefined ? props.match.params.groupID : props.match.params.user),
             }
         })
 
         if(props.match.params.user||props.match.params.groupID){
+
             store.dispatch({type:"INCREMENT_MESSAGES_INDEX",payload:{zerofy:true}})
             //get all messages in index 0, WOULDNT RUN ANY OTHER PROCESS ^^
             Axios.post("http://localhost:2500/messages/paginate",
@@ -56,6 +69,7 @@ const Main = (props)=>{
                 store.dispatch({type:"SET_MESSAGES_LIST",payload:{messages:v.data,add:false}})
                 store.dispatch({type:"SET_MESSAGES_LOADING",payload:{loading:false}})
             })
+
         }
 
 
@@ -93,12 +107,16 @@ const Main = (props)=>{
                 {type:"SET_CURRENT_CHAT",
                 payload:{
                     isGroup: null,
-                    id:null
+                    id:null,
+                    pos:0
                 }
             })
             store.dispatch({type:"SET_MESSAGES_LIST",payload:{messages:{data:[]},add:false}})
         }
-    }, [props.match.params.user,props.match.params.groupID,props.username])
+    }, [props.match.params.user,props.match.params.groupID])
+
+
+
 
 
 
@@ -160,9 +178,12 @@ const Main = (props)=>{
         </Row>
         {
             props.messagesLength > 0 ?
-            <Convo show={props.match.params.user && window.innerWidth <= 576}/>
+            <Convo show={props.match.params.user && window.innerWidth <= 576} canChat={props.canChat}/>
             :
-            null
+            <div className="w-100 h-100 d-none d-sm-flex flex-column justify-content-center align-items-center">
+                <EmptyChat height="450px" width="450px" />
+                <span className="text-light text-bold">Select a chat to read messages</span>
+            </div>
         }
     </Container>
     )
@@ -179,6 +200,7 @@ const getUserSessionDetails = state =>
         currentMessagesListStats: state.Messaging.currentChat,
         token:state.AuthenticationStatus.JWT_TOKEN,
         contact: state.Messaging.messagesList.contact,
+        canChat: !state.Messaging.blocked.includes(state.Messaging.messagesList.contact)
     }
 )
 export default connect(getUserSessionDetails)(Main)

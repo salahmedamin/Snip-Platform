@@ -2,7 +2,7 @@ import {Col,Button,Form} from 'react-bootstrap'
 import ReCAPTCHA from "react-google-recaptcha";
 import validator from 'validator';
 import {useState,useRef} from 'react'
-import { Link,Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Axios from 'axios'
 import {connect} from "react-redux"
 import store from "../.././../redux-data/store"

@@ -1,5 +1,5 @@
 import store from '../../../../redux-data/store'
-import Reply from "../../../SVG/Messages/reply"
+import Reply from "../../../SVG/Messages/MessageOptions/reply"
 export default (props)=>{
 
     return(

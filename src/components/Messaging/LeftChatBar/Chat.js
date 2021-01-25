@@ -52,15 +52,15 @@ class Chat extends React.PureComponent{
                     null
                 }
                 {this.props.isGroup ? <div className="position-absolute" style={{top:5,right:12,fontSize:"8.75px"}}>Group created by {this.props.creator}</div> : ''}
-                <div className={"userPicture rounded-circle border"} style={{width:50,height:50,minHeight:50,minWidth:50,overflow:"hidden"}}>
-                    <img src={this.props.profilePic === "" ? "/img/messages/default_pic.svg":this.props.profilePic} alt="" className="w-100 h-100"/>
+                <div className={"userPicture rounded-circle"+(!this.props.profilePic ? " border":"")} style={{width:50,height:50,minHeight:50,minWidth:50,overflow:"hidden"}}>
+                    <img src={!this.props.profilePic ? "/img/messages/default_pic.svg":this.props.profilePic} alt="" className="w-100 h-100"/>
                 </div>
                 <div className={"message w-75 p-2 d-flex flex-column"}>
                     <div className={"sender w-100"}>
                         {this.props.isGroup ? this.props.groupName : this.props.contact}
                     </div>
                     <div className={"content w-100"}>
-                        {this.props.isSender ? "You: ":''} {this.props.lastMessage.content.length > 15 ? this.props.lastMessage.content.substr(0,15)+"..." : this.props.lastMessage.content}
+                        {this.props.isSender ? "You: ": !this.props.isSender && this.props.isGroup ? this.props.lastMessage.sender+":" : ''} {this.props.lastMessage.content.length > 15 ? this.props.lastMessage.content.substr(0,15)+"..." : this.props.lastMessage.content}
                     </div>
                 </div>
                 <div className={"timeandoptions d-flex flex-column w-25"}>
